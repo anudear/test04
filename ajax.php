@@ -11,9 +11,15 @@ $role = optional_param('role','',PARAM_RAW);
 $city = optional_param('city','',PARAM_RAW);
 $userquery = optional_param('query','',PARAM_RAW);
 $coursename = optional_param('coursename','',PARAM_RAW);
-$courseid = optional_param('courseid','',PARAM_RAW);
+$cname = optional_param('courseid','',PARAM_RAW);
 $userid = optional_param('userid','',PARAM_RAW);
 $load = optional_param('load','',PARAM_INT);
+$ustartdate = optional_param('userstartdt','',PARAM_RAW);
+$uenddate = optional_param('userenddt','',PARAM_RAW);
+$cstartdate = optional_param('coursestartdt','',PARAM_INT);
+$cenddate = optional_param('courseenddt','',PARAM_INT);
+
+
 if(!empty($startdate)||!empty($enddate)||!empty($category)||!empty($department)||!empty($role)||!empty($city)){
 	$stime=strtotime($startdate);
 	$etime=strtotime($enddate);
@@ -56,8 +62,18 @@ if(!empty($userid)){
 
 //--------------------------------
 
-if(!empty($courseid)){
-		echo course_filter_ajax_html_output($courseid);
+if(!empty($cname)){
+	$filter = course_filter_ajax_html_output($cname);
+	$courseid = $DB->get_field('course','id',array('fullname'=>$cname));
+	$data = coursetable_data($courseid);
+	//$return=array($filter,$data);
+	// echo json_encode($return);
+	$html="";
+	$html.=$filter;
+	$html.=$data;
+	
+	echo $html;
+
 	}
 
 if(!empty($load)){

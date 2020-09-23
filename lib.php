@@ -7,8 +7,6 @@ require_once("$CFG->dirroot/lib/completionlib.php");
 require_once($CFG->dirroot . '/grade/querylib.php');
 
 //This function will return number of users enrolled into this course.- paarameters with returning function.
-
-
 function all_enrolled_usersdata($courseid)
 {
 	global $DB,$CFG;
@@ -32,7 +30,6 @@ function get_enroled_userdata($courseid)
 		sort($listofusers);
 		return  $listofusers;
 	}
-
 
 }
 //This function will return number of users enrolled into this course.- paarameters with returning function.
@@ -281,7 +278,8 @@ function filter_ajax_html_otput($userid){
 		$temp2=1;
 		$crdata='';
 		$crlabel='';
-		foreach ($yenrol as $crkey => $crvalue) {
+		if(!empty($yenrol)){
+					foreach ($yenrol as $crkey => $crvalue) {
 			if($temp2 == 1){
 				$crdata = $crvalue;
 				$crlabel = "'".$crkey."'";
@@ -292,6 +290,8 @@ function filter_ajax_html_otput($userid){
 			}
 			$temp2++;
 		}
+		}
+
 		$html .= html_writer::start_div('row');
 		$html .= html_writer::start_div('col-md-6');
 		$html .= html_writer::start_div('card pb-3 m-1');
@@ -536,7 +536,7 @@ function get_user_yearly_completion($userid){
 function get_enrolled_course_yearly($userid){
 	global $DB;
 	$enrolled=$DB->get_records_sql("SELECT timecreated FROM {user_enrolments} WHERE userid=".$userid."");
-	$enroledarray=[];
+	$enrolledarray=[];
 	foreach ($enrolled as $courseenrolled) {
 		$single=$courseenrolled->timecreated;
 		$enrolledarray[]= date('Y',$single);
@@ -952,6 +952,7 @@ function html_canavas_jscode_generater($stime=null,$etime=null,$categoryid=null,
 				global $DB;
 				$convdate=[];
 				$allenrolldates = all_enrolled_usersdata_date($course_id);
+
 				foreach ($allenrolldates as $condate) { 
 					$convdate[]=date('Y', $condate);
 				}
@@ -1548,7 +1549,7 @@ function course_filter_ajax_html_output($coursename){
 		</div>'; 
 		$html.=course_enrollandcompletion_monthly_data($courseid);
 		$html.=yearwise_course_enrollment_data($courseid);
-		$html.=coursetable_data($courseid);
+		//$html.=coursetable_data($courseid);
 		return $html;
 	}
 
@@ -1636,11 +1637,16 @@ function yearwise_course_enrollment_data($courseid){
 		}
 		 $enrolldates=get_enroled_userdata($courseid);
 	 		$convdate=[];
-			foreach ($enrolldates as $condate) { 
+	 		if(!empty($enrolldates)){
+	 			foreach ($enrolldates as $condate) { 
 				$convdate[]=date('Y', $condate[1]);
 
 			}
+	 		}
+
 			$userenrolconvyear = array_count_values($convdate);
+			$enrolllabel ="";
+			$enrolldata ="";
 			$counter=1;
 			if(!empty($userenrolconvyear)){
 			foreach ($userenrolconvyear as $enkey => $envalue) {
@@ -1810,10 +1816,11 @@ function course_enrollandcompletion_monthly_data($courseid){
 		//here getting enroll course data.
 		$enrolldate=get_enroled_userdata($courseid);
 		$emptyarray=[];
-		foreach($enrolldate as $singledate){
-				$enrol=$singledate[1];
-				$emptyarray[]=date('m', $singledate[1]);
-				//print_object($emptyarray);die;
+		if (!empty($enrolldate)) {
+			foreach($enrolldate as $singledate){
+			$enrol=$singledate[1];
+			$emptyarray[]=date('m', $singledate[1]);
+		}
 		}
 		$enrolcourse = array_count_values($emptyarray);
 		$enrollarray=[];
@@ -2080,23 +2087,12 @@ function coursetable_data($courseid){
 
 						}
 					}
-
 					$html="";
 			 		$html.=html_writer::start_div('row m-1');
 			 		$html.=html_writer::start_div('col-md-12 p-2 card');
 			 		$html.=html_writer::table($usertable);
 			 		$html.=html_writer::end_div();
 			 		$html.=html_writer::end_div();
-			 		// $datatablelink=$CFG->wwwroot.'/local/deptrpts/js/jquery.dataTables.min.js';
-			 		// $html.='<script scr="'.$datatablelink.'"></script>';
-			 		// $html.= "<script>
-		    // 				$('#coursetable').DataTable({
-		    //         dom: 'lBfrtip',
-		    //         buttons: [
-		    //             'excel', 'pdf'
-		    //         ]
-		    //     	});
-						// 	</script>";
 			 		return $html;
 							
 

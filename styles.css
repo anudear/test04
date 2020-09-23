@@ -1,0 +1,77 @@
+#page-local-deptrpts-index #ajaxresult .card  i{
+font-size: 50px;
+padding: 30%;
+}
+
+#page-local-deptrpts-index.card{
+	min-height: 100px;
+}
+#page-local-deptrpts-index .card .numbers p{
+	padding: 10%;
+}
+
+#page-local-deptrpts-index #leftsidefilter input{
+	width: 100% ;
+
+
+}
+
+#page-local-deptrpts-index #leftsidefilter label{
+	margin-left: 10px;
+}
+
+
+#page-local-deptrpts-index #leftsidefilter select{
+	width: 100% ;
+}
+
+#rightsidesection {
+	background-color: #d8edf1 !important;
+}
+
+#headingOne {
+	background-color: ;
+}
+#page-local-deptrpts-index #ajaxresult .statcards
+{
+	border-radius: 10%;
+	box-shadow: 10px 10px 5px grey;
+}
+#page-local-deptrpts-index #ajaxresult #category_cards .card
+{
+	width:100%;
+}
+#page-local-deptrpts-index #accordionExample #collapseOne{
+	background-color: #2e3439 !important;
+}
+#page-local-deptrpts-index #accordionExample #collapseTwo{
+	background-color: #5e6973 !important;
+}
+
+#page-local-deptrpts-index #accordionExample #collapseThree{
+	background-color: #5e6973 !important;
+}
+
+#page-local-deptrpts-index #ajaxresult  .userstats{
+		border-radius: 10%;
+		box-shadow: 10px 10px 5px grey;
+
+
+}
+#headingOne{
+	padding: inherit !important;
+}
+
+#headingTwo{
+	padding: inherit !important;
+}
+
+#headingThree{
+	padding: inherit !important;
+}
+#accordionExample .dropdown-menu{
+	display: contents !important;
+}
+#accordionExample .dropdown-menu li{
+	background: white !important;
+}

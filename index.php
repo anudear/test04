@@ -48,7 +48,7 @@ $PAGE->requires->css(new moodle_url($CFG->wwwroot.'/local/deptrpts/css/buttons.d
 $PAGE->requires->js(new moodle_url($CFG->wwwroot.'/local/deptrpts/js/jszip.min.js'),true);
 $PAGE->requires->js(new moodle_url($CFG->wwwroot.'/local/deptrpts/js/pdfmake.min.js'),true);
 $PAGE->requires->js(new moodle_url($CFG->wwwroot.'/local/deptrpts/js/vfs_fonts.js'),true);
-$PAGE->requires->js(new moodle_url($CFG->wwwroot.'/local/deptrpts/js/demo.js'));
+$PAGE->requires->js(new moodle_url($CFG->wwwroot.'/local/deptrpts/js/demo.js'),true);
 
 
 echo $OUTPUT->header();
@@ -56,6 +56,7 @@ echo $OUTPUT->header();
 //here I am getting all dropdon data.
 //Manju: creating the container here.
 $html='';
+
 $html .= html_writer::start_div('container-fluid');
 $html .= html_writer::start_div('row');
 $html .= html_writer::start_div('col-md-2 bg-dark text-white p-2 text-center', array('id'=>'leftsidefilter'));
@@ -191,6 +192,30 @@ $html .='</div>
       <div class="card-body">';
 // end here..
 //-------------------------------------------
+$html .= html_writer::start_div('row');
+$html .= html_writer::start_div('col-md-12 bg-dark text-white p-2 text-center', array('id'=>'leftsidefilter'));
+//start date.
+$html .= html_writer::start_div('form-group row text-center');
+$html .= html_writer::start_tag('label', array('for'=>'example-date-input','class'=>'col-form-label'));
+$html .= get_string('startdate','local_deptrpts');
+$html .= html_writer::end_tag('label');
+$html .= html_writer::start_div('col-12');
+$html .= html_writer::start_tag('input', array('id'=>'startdate-userselect','class'=>'form-control','type'=>'date','onclick'=>'startdatedropdown();'));
+$html .= html_writer::end_div();
+$html .= html_writer::end_div();
+
+//end date.
+$html .= html_writer::start_div('form-group row');
+$html .= html_writer::start_tag('label', array('for'=>'exmple-date-input','class'=>'col-form-label'));
+$html .= get_string('enddate','local_deptrpts');
+$html .= html_writer::end_tag('label');
+$html .= html_writer::start_div('col-12');
+$html .= html_writer::start_tag('input', array('id'=>'enddate-userselect','class'=>'form-control','type'=>'date','onclick'=>'enddatedropdown();'));
+$html .= html_writer::end_div();
+$html .= html_writer::end_div();
+$html .= html_writer::end_div();
+$html .= html_writer::end_div();
+
 $html .= html_writer::start_div('form-group row');
 $html .= html_writer::start_tag('label', array('for'=>'example-select-user','class'=>'col-form-label mdb-select md-form','searchable'=>'Search here..'));
 $html .= get_string('selectuser','local_deptrpts');
@@ -217,6 +242,31 @@ $html .='</div>
       <div class="card-body">';
 // end here..
 //-------------------------------------------
+
+$html .= html_writer::start_div('row');
+$html .= html_writer::start_div('col-md-12 bg-dark text-white p-2 text-center', array('id'=>'leftsidefilter'));
+//start date.
+$html .= html_writer::start_div('form-group row text-center');
+$html .= html_writer::start_tag('label', array('for'=>'example-date-input','class'=>'col-form-label'));
+$html .= get_string('startdate','local_deptrpts');
+$html .= html_writer::end_tag('label');
+$html .= html_writer::start_div('col-12');
+$html .= html_writer::start_tag('input', array('id'=>'startdate_courseselect','class'=>'form-control','type'=>'date','onclick'=>'startdatedropdown();'));
+$html .= html_writer::end_div();
+$html .= html_writer::end_div();
+
+//end date.
+$html .= html_writer::start_div('form-group row');
+$html .= html_writer::start_tag('label', array('for'=>'exmple-date-input','class'=>'col-form-label'));
+$html .= get_string('enddate','local_deptrpts');
+$html .= html_writer::end_tag('label');
+$html .= html_writer::start_div('col-12');
+$html .= html_writer::start_tag('input', array('id'=>'enddate_courseselect','class'=>'form-control','type'=>'date','onclick'=>'enddatedropdown();'));
+$html .= html_writer::end_div();
+$html .= html_writer::end_div();
+$html .= html_writer::end_div();
+$html .= html_writer::end_div();
+//select course dropdown.
 $html .= html_writer::start_div('form-group row');
 $html .= html_writer::start_tag('label', array('for'=>'example-select-course','class'=>'col-form-label mdb-select md-form','searchable'=>'Search here..'));
 $html .= get_string('selectcourses','local_deptrpts');
@@ -239,11 +289,6 @@ $html .=html_writer::end_div();
 $html .=html_writer::start_div('row');
 $html .=html_writer::start_div('col-md-12');
 $html .=get_userdatatable($stime=null,$etime=null,$category=null,$department=null,$role=null,$city=null);
-$html .=html_writer::end_div();
-$html .=html_writer::end_div();
-$html .= html_writer::end_div();
-$html .= html_writer::end_div();
-$html .= html_writer::end_div();
 $html.= "<script>
             $('#usertable').DataTable({
             dom: 'lBfrtip',
@@ -251,7 +296,14 @@ $html.= "<script>
                 'excel', 'pdf'
             ]
         });
-          </script>";
+          </script>
+";
+$html .=html_writer::end_div();
+$html .=html_writer::end_div();
+$html .= html_writer::end_div();
+$html .= html_writer::end_div();
+$html .= html_writer::end_div();
+
 
 echo $html;
 
